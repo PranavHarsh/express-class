@@ -1,107 +1,165 @@
-// // installing the express: npm install express
-// // creating http server
+// // // installing the express: npm install express
+// // // creating http server
+
+// // const express = require("express");
+
+// // const app = express();
+
+// // function sum(n) {
+// //   let ans = 0;
+// //   for (let i = 1; i <= n; i++) {
+// //     ans = ans + i;
+// //   }
+// //   return ans;
+// // }
+
+// // app.get("/", function (req, res) {
+// //   const n = req.query.n;
+// //   const ans = sum(n);
+// //   res.send("hi your answer is " + ans);
+// // });
+
+// // app.listen(3000);
 
 // const express = require("express");
-
 // const app = express();
 
-// function sum(n) {
-//   let ans = 0;
-//   for (let i = 1; i <= n; i++) {
-//     ans = ans + i;
-//   }
-//   return ans;
-// }
+// var users = [
+//   {
+//     name: "jonny",
+//     kidneys: [
+//       {
+//         healthy: false,
+//       },
+//     ],
+//   },
+// ];
 
+// app.use(express.json());
+
+// //----use of filter in js--------
 // app.get("/", function (req, res) {
-//   const n = req.query.n;
-//   const ans = sum(n);
-//   res.send("hi your answer is " + ans);
+//   const jonnyKidneys = users[0].kidneys;
+//   const numberOfKidneys = jonnyKidneys.length;
+//   let numberOfHealthyKidneys = 0;
+//   for (let i = 0; i < jonnyKidneys.length; i++) {
+//     if (jonnyKidneys[i].healthy) {
+//       numberOfHealthyKidneys = numberOfHealthyKidneys + i;
+//     }
+//   }
+//   const numberOfUnHealthyKidneys = numberOfKidneys - numberOfHealthyKidneys;
+//   res.json({
+//     numberOfKidneys,
+//     numberOfHealthyKidneys,
+//     numberOfUnHealthyKidneys,
+//   });
 // });
+
+// app.post("/", function (req, res) {
+//   const isHealthy = req.body.isHealthy;
+//   users[0].kidneys.push({
+//     healthy: isHealthy,
+//   });
+//   res.json({
+//     msg: "Done!",
+//   });
+// });
+
+// // you should return a 411
+// app.put("/", function (req, res) {
+//   for (let i = 0; i < users[0].kidneys.length; i++) {
+//     users[0].kidneys[i].healthy = true;
+//   }
+//   res.json({});
+// });
+
+// // only if atleast one unhealthy kidney is there do this, else return 411
+
+// app.delete("/", function (req, res) {
+//   if (isThereAtleastOneUnhealthyKidney()) {
+//     const newKidneys = [];
+//     for (let i = 0; i < users[0].kidneys.length; i++) {
+//       if (users[0].kidneys[i].healthy) {
+//         newKidneys.push({
+//           healthy: true,
+//         });
+//       }
+//     }
+//     users[0].kidneys = newKidneys;
+//     res.json({ msg: "done" });
+//   } else {
+//     res.status(411).json({
+//       msg: "You have no bad kidneys",
+//     });
+//   }
+// });
+
+// function isThereAtleastOneUnhealthyKidney() {
+//   let atleastOneUnhealthyKidney = false;
+//   for (let i = 0; i < users[0].kidneys.length; i++) {
+//     if (!users[0].kidneys[i].healthy) {
+//       atleastOneUnhealthyKidney = true;
+//     }
+//   }
+//   return atleastOneUnhealthyKidney;
+// }
 
 // app.listen(3000);
 
-const express = require("express");
-const app = express();
+//-----------***************************-------------------------------------//
 
-var users = [
-  {
-    name: "jonny",
-    kidneys: [
-      {
-        healthy: false,
-      },
-    ],
-  },
-];
+//------------------map, filter, arrow functions---------//
+//given an array, give me back a new array in which every value is multiplied by 2
+// [1,2,3,4,5,]
+//output should be : [2,4,6,8,10]
 
-app.use(express.json());
+// const input = [1, 2, 3, 4, 5];
 
-//----use of filter in js--------
-app.get("/", function (req, res) {
-  const jonnyKidneys = users[0].kidneys;
-  const numberOfKidneys = jonnyKidneys.length;
-  let numberOfHealthyKidneys = 0;
-  for (let i = 0; i < jonnyKidneys.length; i++) {
-    if (jonnyKidneys[i].healthy) {
-      numberOfHealthyKidneys = numberOfHealthyKidneys + i;
-    }
+//solution
+// const newArray = [];
+
+//for (let i = 0; i < input.length; i++) {
+// newArray.push(input[i] * 3);
+//}
+//console.log(newArray);
+
+//-------------other-solution--------------//
+
+// const ans = input.map(function (i) {
+//   return i * 2;
+// });
+// console.log(ans);
+
+//--------filtering---------/
+//getting all the even value from the given input array
+
+const arr = [1, 2, 3, 4, 5];
+
+//output should be 2,4
+// const newArr = [];
+// for (let i = 0; i < arr.length; i++) {
+//   if (arr[i] % 2 == 0) {
+//     newArr.push(arr[i]);
+//   }
+// }
+// console.log(newArr);
+
+// const ans = arr.filter(function (n) {
+//   if (n % 2 == 0) {
+//     return true;
+//   } else {
+//     return false;
+//   }
+// });
+// console.log(ans);
+
+//--------------------map-function------------------//
+
+// create a map fn that takes an array and a transform fn as input and returns the transformed aaray as output
+const map = (arr, fn) => {
+  const transformedArr = [];
+  for (let i = 0; i < arr.length; i++) {
+    transformedArr.push(fn(arr[i]));
   }
-  const numberOfUnHealthyKidneys = numberOfKidneys - numberOfHealthyKidneys;
-  res.json({
-    numberOfKidneys,
-    numberOfHealthyKidneys,
-    numberOfUnHealthyKidneys,
-  });
-});
-
-app.post("/", function (req, res) {
-  const isHealthy = req.body.isHealthy;
-  users[0].kidneys.push({
-    healthy: isHealthy,
-  });
-  res.json({
-    msg: "Done!",
-  });
-});
-
-// you should return a 411
-app.put("/", function (req, res) {
-  for (let i = 0; i < users[0].kidneys.length; i++) {
-    users[0].kidneys[i].healthy = true;
-  }
-  res.json({});
-});
-
-// only if atleast one unhealthy kidney is there do this, else return 411
-
-app.delete("/", function (req, res) {
-  if (isThereAtleastOneUnhealthyKidney()) {
-    const newKidneys = [];
-    for (let i = 0; i < users[0].kidneys.length; i++) {
-      if (users[0].kidneys[i].healthy) {
-        newKidneys.push({
-          healthy: true,
-        });
-      }
-    }
-    users[0].kidneys = newKidneys;
-    res.json({ msg: "done" });
-  } else {
-    res.status(411).json({
-      msg: "You have no bad kidneys",
-    });
-  }
-});
-
-function isThereAtleastOneUnhealthyKidney() {
-  let atleastOneUnhealthyKidney = false;
-  for (let i = 0; i < users[0].kidneys.length; i++) {
-    if (!users[0].kidneys[i].healthy) {
-      atleastOneUnhealthyKidney = true;
-    }
-  }
-  return atleastOneUnhealthyKidney;
-}
-
-app.listen(3000);
+  return transformedArr;
+};
