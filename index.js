@@ -163,3 +163,118 @@ const map = (arr, fn) => {
   }
   return transformedArr;
 };
+
+
+//--------------middlewares------------
+
+// const express = require ("express");
+
+// const app = express()
+
+// app.get("/health-checkup", function (req, res) {
+//   const username = req.headers.username;
+//   const password = req.headers.password
+//   const kidneyId = req.query.kidneysId;
+
+//   if (username === "harsh" && password === "pass") {
+//     res.status(400).json({"msg": "something up with your inputs"})
+//     return
+//   }
+
+//     if (kidneyId === 1 || kidneyId == 2) {
+//       //do somethoing with kidney here
+//       res.json({
+//         msg: "Your kidney is fine!"
+//       })
+
+//   }
+
+// })
+// app.listen(3000);
+
+//--------------middlewares---------
+// const express = require express();
+
+// const app = express();
+
+// app.post("/health-checkup", function (req, res) {
+//   //kidneys =[1,2]
+//   const kidneys = req.body.kidneys;
+//   const kidneyLength = kidneys.length;
+//   res.send("you have " + kidneyLength + " kidneys");
+// });
+
+// -------------global catches-----------------------
+// app.use(function(err, req, res, next) {
+//   res.json({
+//     msg: "sorry something wrong"
+//   })
+// })
+
+//----------------zod-------------------
+// const express = require("express");
+// const zod = require("zod");
+// const app = express();
+
+// const schema = zod.array(zod.number());
+
+// app.use(express.json());
+
+// app.post("/health-checkup", function (req, res) {
+//   const kidneys = req.body.kidneys;
+//   const response = schema.safeParse(kidneys);
+//   if (!response.success) {
+//     res.status(411).json({
+//       msg: "input is invalid",
+//     });
+//   } else {
+//     res.send({
+//       response,
+//     });
+//   }
+// });
+
+// app.listen(3000);
+
+// const express = require("express");
+// const zod = require("zod");
+// const express2 = require("express");
+
+// const app2 = express2();
+// zod.string().email().endsWith("@google.com");
+
+// const middlewares = [express.json(), userValidator, kidneyValidator];
+// function middlewares(req, res, next) {
+//   req.user = 1;
+// }
+
+// app2.get("/", ...middlewares, function (req, res) {
+//   //console.log(req.user);
+//   //console.log(next);
+//   res.json({
+//     msg: "done",
+//   });
+// });
+
+// app.use(function (err, req, res, next) {
+//   res.send({
+//     msg: "internal error",
+//   });
+// });
+// app.listen(3000);
+
+//------adding authenitication if adhhar or you have subscription than only proced
+const express = require("express");
+const zod = require("zod");
+const express2 = require("express");
+
+const app = express2();
+app.use(calculateRequestCount);
+
+function calculateRequestCount(req, res, next) {
+  requestCount++;
+  next();
+  const response = schema.safeParse(data);
+  response.errors.forEach((error) => {});
+}
+
