@@ -278,3 +278,70 @@ function calculateRequestCount(req, res, next) {
   response.errors.forEach((error) => {});
 }
 
+
+//--new
+
+// const express = require("express");
+// const jwt = require("jsonwebtoken");
+// const jwtPassword = "1234567";
+
+// const app = express();
+// app.use();
+// const ALL_USERS = [
+//   {
+//     username: "pranavharsh@gmail.com",
+//     password: "123",
+//     name: "pranavharsh",
+//   },
+//   {
+//     username: "romeoharshg@gmail.com",
+//     password: "123",
+//     name: "romeoharsh",
+//   },
+//   {
+//     username: "aayush@gmail.com",
+//     password: "123",
+//     name: "aayush",
+//   },
+// ];
+
+// function userExists(username, password) {
+//   const userExists = false;
+//   for (let i = 0; i < ALL_USERS.length; i++) {
+//     if (ALL_USERS[i].username == username && ALL_USERS[i].password == password)
+//       userExists = true;
+//   }
+// }
+// return userExists;
+
+//-----adding mongoose database ------------
+const express = require("express");
+const mongoose = require("mongoose");
+const app = express();
+
+app.use(express.json());
+
+mongoose.connect(""); //paste your url of mongoose
+
+const User = mongoose.model("Users", {
+  name: String,
+  email: String,
+  password: String,
+});
+
+app.post("/signup", async function (req, res) {
+  const username = req.body.username;
+  const password = req.body.password;
+  const name = req.body.name;
+
+  // User.update, User.delete
+
+  const existingUser = await findOne({ emai: username });
+  // CRUD => CREATE, update, delete, Read
+  if (existingUser) {
+    return res.status(400).send("Username already exists");
+  }
+
+  await User.create({ name, email: username, password });
+});
+
